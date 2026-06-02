@@ -1,10 +1,7 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from "@kit.AbilityKit";
-import { window, KeyboardAvoidMode, PersistenceV2 } from "@kit.ArkUI";
+import { window, KeyboardAvoidMode } from "@kit.ArkUI";
 
 import Logger from '../common/utils/Logger';
-import { AppConfig } from "../model/AppConfig";
-
-const DOMAIN = 0x0000;
 
 export default class EntryAbility extends UIAbility {
     private LOG_TAG: string = "[EntryAbility]";

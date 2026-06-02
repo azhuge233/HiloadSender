@@ -9,7 +9,6 @@ import Logger from './Logger';
 export default class CommonUtils {
     private static LOG_TAG: string = "[CommonUtils]";
 
-    // 按照 API 版本显示 Toast 提醒
     public static alert(message: string | Resource, promptAction: PromptAction, duration: number = 1500) {
         promptAction.openToast({
             message: message,
