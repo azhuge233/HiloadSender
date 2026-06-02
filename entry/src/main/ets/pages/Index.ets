@@ -3,6 +3,7 @@ import { hdsMaterial, HdsNavigation,
     HdsNavigationTitleMode, ScrollEffectType } from "@kit.UIDesignKit";
 import { common } from "@kit.AbilityKit";
 import { PersistenceV2 } from "@kit.ArkUI";
+import bundleManager from '@ohos.bundle.bundleManager';
 
 import Logger from "../common/utils/Logger";
 import PayloadSender from "../common/utils/PayloadSender";
@@ -13,6 +14,9 @@ import { AppConfig } from "../model/AppConfig";
 @ComponentV2
 struct Index {
     private LOG_TAG = "[pages/Index]";
+
+    @Local versionName: string = '';
+    @Local versionCode: string = '';
 
     private config: AppConfig | undefined = PersistenceV2.connect(AppConfig, 'UserAppConfig', () => new AppConfig());
 
@@ -33,12 +37,32 @@ struct Index {
         ]
     };
 
+    aboutToAppear(): void {
+        try {
+            let bundleInfo = bundleManager.getBundleInfoForSelfSync(bundleManager.BundleFlag.GET_BUNDLE_INFO_DEFAULT);
+            this.versionName = bundleInfo.versionName;
+            this.versionCode = bundleInfo.versionCode.toString();
+        } catch (error) {
+            Logger.error(this.LOG_TAG, `同步获取失败: ${error.message}`);
+        }
+    }
+
     private getFileName(path: string | undefined): string | Resource {
         if (!path) return $r("app.string.no_payload_selected");
 
         const index = path.lastIndexOf('/');
         if (index !== -1) return path.substring(index + 1);
         return path;
+    }
+
+    @Builder
+    VersionFooter() {
+        Text(`${this.versionName} (${this.versionCode})`)
+            .width('100%')
+            .fontColor(Color.Grey)
+            .fontSize(10)
+            .alignSelf(ItemAlign.End)
+            .textAlign(TextAlign.Center)
     }
 
     @Builder
@@ -181,6 +205,8 @@ struct Index {
     build() {
         HdsNavigation() {
             this.MainContent();
+
+            this.VersionFooter();
         }
         .titleBar({
             content: {
