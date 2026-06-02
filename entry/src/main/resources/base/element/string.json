@@ -2,15 +2,75 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "module description"
+      "value": "Hiload Sender"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "description"
+      "value": "Hiload Sender"
     },
     {
       "name": "EntryAbility_label",
-      "value": "label"
+      "value": "Hiload Sender"
+    },
+    {
+      "name": "index_navigation_title",
+      "value": "Hiload Sender"
+    },
+    {
+      "name": "index_navigation_subtitle",
+      "value": "Send payloads to PS4/PS5"
+    },
+    {
+      "name": "index_navigation_menu_help",
+      "value": "Help"
+    },
+    {
+      "name": "index_ip_address_label",
+      "value": "IP Address"
+    },
+    {
+      "name": "index_port_label",
+      "value": "Port"
+    },
+    {
+      "name": "index_ip_address_placeholder",
+      "value": "192.168.X.XXX"
+    },
+    {
+      "name": "index_port_placeholder",
+      "value": "9021"
+    },
+    {
+      "name": "index_file_pick_button_label",
+      "value": "Select File"
+    },
+    {
+      "name": "index_file_pick_label",
+      "value": "Sending File"
+    },
+    {
+      "name": "index_send_button_label",
+      "value": "Send"
+    },
+    {
+      "name": "no_payload_selected",
+      "value": "No payload selected"
+    },
+    {
+      "name": "undefined_config",
+      "value": "Undefined config"
+    },
+    {
+      "name": "sending",
+      "value": "Payload sending..."
+    },
+    {
+      "name": "send_success",
+      "value": "Payload send success"
+    },
+    {
+      "name": "send_failed",
+      "value": "Send failed: %s"
     }
   ]
 }

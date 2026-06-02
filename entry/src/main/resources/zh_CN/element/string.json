@@ -1,0 +1,76 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "Hiload Sender"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "Hiload Sender"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "Hiload Sender"
+    },
+    {
+      "name": "index_navigation_title",
+      "value": "Hiload Sender"
+    },
+    {
+      "name": "index_navigation_subtitle",
+      "value": "向 PS4/PS5 发送 payloads"
+    },
+    {
+      "name": "index_navigation_menu_help",
+      "value": "帮助"
+    },
+    {
+      "name": "index_ip_address_label",
+      "value": "IP 地址"
+    },
+    {
+      "name": "index_port_label",
+      "value": "端口"
+    },
+    {
+      "name": "index_ip_address_placeholder",
+      "value": "192.168.X.XXX"
+    },
+    {
+      "name": "index_port_placeholder",
+      "value": "9021"
+    },
+    {
+      "name": "index_file_pick_button_label",
+      "value": "选择文件"
+    },
+    {
+      "name": "index_file_pick_label",
+      "value": "待发送文件"
+    },
+    {
+      "name": "index_send_button_label",
+      "value": "发送"
+    },
+    {
+      "name": "no_payload_selected",
+      "value": "未选择 Payload"
+    },
+    {
+      "name": "undefined_config",
+      "value": "config 为空"
+    },
+    {
+      "name": "sending",
+      "value": "Payload 发送中..."
+    },
+    {
+      "name": "send_success",
+      "value": "Payload 发送成功"
+    },
+    {
+      "name": "send_failed",
+      "value": "发送失败: %s"
+    }
+  ]
+}
