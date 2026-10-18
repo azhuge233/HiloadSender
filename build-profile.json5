@@ -1,20 +1,6 @@
 {
   "app": {
-    "signingConfigs": [
-      {
-        "name": "default",
-        "type": "HarmonyOS",
-        "material": {
-          "certpath": "C:\\Users\\azhuge233\\.ohos\\config\\default_HiloadSender_aL4D3-joUQqmpNl-nsB7l32fv_jfdFQ3jjSq5Yi8Hfc=.cer",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001B9743D978A14180E61C157A0E4F990B4F3A0EBDB9B530953C78B919A5E7B548129DCBA60AF2499B",
-          "profile": "C:\\Users\\azhuge233\\.ohos\\config\\default_HiloadSender_aL4D3-joUQqmpNl-nsB7l32fv_jfdFQ3jjSq5Yi8Hfc=.p7b",
-          "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\azhuge233\\.ohos\\config\\default_HiloadSender_aL4D3-joUQqmpNl-nsB7l32fv_jfdFQ3jjSq5Yi8Hfc=.p12",
-          "storePassword": "0000001B525CB3A74FDBAB7270D77473C67E37618F08F7251CE8E4D91BF27C8A4AEA063C29F34C7F9D88BA"
-        }
-      }
-    ],
+    "signingConfigs": [],
     "products": [
       {
         "name": "default",

@@ -10,3 +10,6 @@
 /.clang-tidy
 **/.test
 /.appanalyzer
+/external-signing-config.json
+/.build-profile.signing-backup.json5
+/.cache/
