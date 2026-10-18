@@ -1,14 +1,17 @@
 import { hdsMaterial, HdsNavigation,
     HdsNavigationMenuContentOptions,
     HdsNavigationTitleMode, ScrollEffectType } from "@kit.UIDesignKit";
-import { common } from "@kit.AbilityKit";
+import { common, ConfigurationConstant } from "@kit.AbilityKit";
 import { PersistenceV2 } from "@kit.ArkUI";
 import bundleManager from '@ohos.bundle.bundleManager';
 
 import Logger from "../common/utils/Logger";
 import PayloadSender from "../common/utils/PayloadSender";
 import CommonUtils from "../common/utils/CommonUtils";
+import ThemeUtils from "../common/utils/ThemeUtils";
 import { AppConfig } from "../model/AppConfig";
+import { ThemeConfig } from "../model/ThemeConfig";
+import { HelpPage } from "./HelpPage";
 
 @Entry
 @ComponentV2
@@ -19,23 +22,39 @@ struct Index {
     @Local versionCode: string = '';
 
     private config: AppConfig | undefined = PersistenceV2.connect(AppConfig, 'UserAppConfig', () => new AppConfig());
+    private themeConfig: ThemeConfig | undefined = PersistenceV2.connect(ThemeConfig, 'ThemeConfig', () => new ThemeConfig());
+    private pathStack: NavPathStack = new NavPathStack();
 
     private uiContext = this.getUIContext();
     private context = this.uiContext.getHostContext() as common.UIAbilityContext;
     private promptAction = this.uiContext.getPromptAction();
 
-    private menus: HdsNavigationMenuContentOptions = {
-        value: [
-            {
-                content: {
-                    label: $r("app.string.index_navigation_menu_help"),
-                    icon: $r("sys.symbol.info_circle"),
-                    action: () => {
+    @Local themeIcon: Resource = $r("sys.symbol.auto_sun_max_fill");
+
+    private get menus(): HdsNavigationMenuContentOptions {
+        return {
+            value: [
+                {
+                    content: {
+                        label: $r("app.string.index_navigation_menu_theme"),
+                        icon: this.themeIcon,
+                        action: () => {
+                            this.cycleThemeMode();
+                        }
+                    }
+                },
+                {
+                    content: {
+                        label: $r("app.string.index_navigation_menu_help"),
+                        icon: $r("sys.symbol.info_circle"),
+                        action: () => {
+                            this.pathStack.pushPath({ name: 'Help' });
+                        }
                     }
                 }
-            }
-        ]
-    };
+            ]
+        };
+    }
 
     aboutToAppear(): void {
         try {
@@ -45,6 +64,36 @@ struct Index {
         } catch (error) {
             Logger.error(this.LOG_TAG, `同步获取失败: ${error.message}`);
         }
+    }
+
+    private themeIconFor(mode: number): Resource {
+        if (mode === ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT) return $r("sys.symbol.sun_max");
+        if (mode === ConfigurationConstant.ColorMode.COLOR_MODE_DARK) return $r("sys.symbol.moon_fill");
+        return $r("sys.symbol.auto_sun_max_fill");
+    }
+
+    private themeLabelFor(mode: number): Resource {
+        if (mode === ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT) return $r("app.string.theme_light");
+        if (mode === ConfigurationConstant.ColorMode.COLOR_MODE_DARK) return $r("app.string.theme_dark");
+        return $r("app.string.theme_follow_system");
+    }
+
+    private cycleThemeMode(): void {
+        const current = this.themeConfig?.colorMode ?? ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET;
+        let next: number = ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET;
+
+        if (current === ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET) {
+            next = ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT;
+        } else if (current === ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT) {
+            next = ConfigurationConstant.ColorMode.COLOR_MODE_DARK;
+        }
+
+        if (this.themeConfig) this.themeConfig.colorMode = next;
+        PersistenceV2.save('ThemeConfig');
+        this.themeIcon = this.themeIconFor(next);
+        ThemeUtils.applyColorMode(this.context, next);
+        CommonUtils.alert(this.themeLabelFor(next), this.promptAction);
+        Logger.info(this.LOG_TAG, `切换主题: ${current} -> ${next}`);
     }
 
     private getFileName(path: string | undefined): string | Resource {
@@ -177,20 +226,40 @@ struct Index {
                         top: 20
                     })
                     .onClick(async () => {
-                        if(this.config) {
-                            CommonUtils.vibrate("haptic.effect.hard");
-                            CommonUtils.alert($r("app.string.sending"), this.promptAction, 6000);
-
-                            Logger.info(this.LOG_TAG, `向 IP = ${this.config.ip} 端口 = ${this.config.port} 发送 payload: ${this.config.filePath}`);
-
-                            const result = await PayloadSender.sendPayload(this.config.filePath, this.config.ip, this.config.port);
-
-                            if(typeof result === "boolean") CommonUtils.alert($r("app.string.send_success"), this.promptAction);
-                            else CommonUtils.alert($r("app.string.send_failed", result), this.promptAction);
-                        } else {
+                        if (!this.config) {
                             Logger.warn(this.LOG_TAG, `空 config`);
                             CommonUtils.alert($r("app.string.undefined_config"), this.promptAction);
+                            return;
                         }
+
+                        const host = this.config.ip.trim();
+                        if (!CommonUtils.isValidIPv4(host)) {
+                            Logger.warn(this.LOG_TAG, `无效 IP: ${this.config.ip}`);
+                            CommonUtils.alert($r("app.string.invalid_ip_address"), this.promptAction);
+                            return;
+                        }
+
+                        if (!CommonUtils.isValidPort(this.config.port)) {
+                            Logger.warn(this.LOG_TAG, `无效端口: ${this.config.port}`);
+                            CommonUtils.alert($r("app.string.invalid_port"), this.promptAction);
+                            return;
+                        }
+
+                        if (!this.config.filePath) {
+                            Logger.warn(this.LOG_TAG, `未选择 payload`);
+                            CommonUtils.alert($r("app.string.no_payload_selected"), this.promptAction);
+                            return;
+                        }
+
+                        CommonUtils.vibrate("haptic.effect.hard");
+                        CommonUtils.alert($r("app.string.sending"), this.promptAction, 6000);
+
+                        Logger.info(this.LOG_TAG, `向 IP = ${host} 端口 = ${this.config.port} 发送 payload: ${this.config.filePath}`);
+
+                        const result = await PayloadSender.sendPayload(this.config.filePath, host, this.config.port);
+
+                        if (typeof result === "boolean") CommonUtils.alert($r("app.string.send_success"), this.promptAction);
+                        else CommonUtils.alert($r("app.string.send_failed", result), this.promptAction);
                     });
 
                 Blank().layoutWeight(1)
@@ -202,12 +271,20 @@ struct Index {
         }
     }
 
+    @Builder
+    PageMap(name: string, param: Object) {
+        if (name === 'Help') {
+            HelpPage();
+        }
+    }
+
     build() {
-        HdsNavigation() {
+        HdsNavigation(this.pathStack) {
             this.MainContent();
 
             this.VersionFooter();
         }
+        .navDestination(this.PageMap)
         .titleBar({
             content: {
                 title: {
@@ -236,6 +313,9 @@ struct Index {
         .width('100%')
         .onAppear(() => {
             Logger.info(this.LOG_TAG, "Loaded!");
+            const colorMode = this.themeConfig?.colorMode ?? ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET;
+            ThemeUtils.applyColorMode(this.context, colorMode);
+            this.themeIcon = this.themeIconFor(colorMode);
         })
     }
 }

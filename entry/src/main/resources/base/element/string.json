@@ -25,6 +25,10 @@
       "value": "Help"
     },
     {
+      "name": "index_navigation_menu_theme",
+      "value": "Theme"
+    },
+    {
       "name": "index_ip_address_label",
       "value": "IP Address"
     },
@@ -71,6 +75,78 @@
     {
       "name": "send_failed",
       "value": "Send failed: %s"
+    },
+    {
+      "name": "invalid_ip_address",
+      "value": "Please enter a valid IPv4 address"
+    },
+    {
+      "name": "invalid_port",
+      "value": "Please enter a valid port (1-65535)"
+    },
+    {
+      "name": "help_title",
+      "value": "Help"
+    },
+    {
+      "name": "help_subtitle",
+      "value": "Usage guide"
+    },
+    {
+      "name": "help_intro",
+      "value": "Send payload files from this phone to a jailbroken PS4/PS5 over TCP."
+    },
+    {
+      "name": "help_steps_title",
+      "value": "How to use"
+    },
+    {
+      "name": "help_step_1",
+      "value": "Make sure the console and this phone are on the same network, and the payload receiver is running."
+    },
+    {
+      "name": "help_step_2",
+      "value": "Enter the console IP address."
+    },
+    {
+      "name": "help_step_3",
+      "value": "Enter the port used by the receiver (default 9021)."
+    },
+    {
+      "name": "help_step_4",
+      "value": "Select a payload file (.elf, .bin, .js or .py)."
+    },
+    {
+      "name": "help_step_5",
+      "value": "Tap Send and wait for the result."
+    },
+    {
+      "name": "help_faq_title",
+      "value": "Troubleshooting"
+    },
+    {
+      "name": "help_faq_1",
+      "value": "Send failed or timed out: check the IP, port, network and receiver state."
+    },
+    {
+      "name": "help_faq_2",
+      "value": "Cannot select a file: only .elf, .bin, .js and .py files are supported."
+    },
+    {
+      "name": "help_note",
+      "value": "This app sends the selected file as raw TCP bytes. It does not perform a handshake or verify the receiver."
+    },
+    {
+      "name": "theme_follow_system",
+      "value": "Follow system"
+    },
+    {
+      "name": "theme_light",
+      "value": "Light"
+    },
+    {
+      "name": "theme_dark",
+      "value": "Dark"
     }
   ]
 }

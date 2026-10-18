@@ -70,4 +70,23 @@ export default class CommonUtils {
             Logger.error(from, `关闭应用失败, ${err}`);
         });
     }
+
+    public static isValidIPv4(value: string): boolean {
+        const text = value.trim();
+        if (text.length === 0) return false;
+
+        const parts = text.split('.');
+        if (parts.length !== 4) return false;
+
+        for (const part of parts) {
+            if (!/^\d{1,3}$/.test(part)) return false;
+            const octet = Number(part);
+            if (octet < 0 || octet > 255) return false;
+        }
+        return true;
+    }
+
+    public static isValidPort(value: number): boolean {
+        return Number.isInteger(value) && value >= 1 && value <= 65535;
+    }
 }

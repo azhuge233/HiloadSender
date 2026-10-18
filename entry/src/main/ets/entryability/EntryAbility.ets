@@ -1,4 +1,4 @@
-import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from "@kit.AbilityKit";
+import { AbilityConstant, UIAbility, Want } from "@kit.AbilityKit";
 import { window, KeyboardAvoidMode } from "@kit.ArkUI";
 
 import Logger from '../common/utils/Logger';
@@ -7,12 +7,6 @@ export default class EntryAbility extends UIAbility {
     private LOG_TAG: string = "[EntryAbility]";
 
     onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-        try {
-            this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
-        } catch (err) {
-            Logger.error(this.LOG_TAG, `Failed to set colorMode. Cause: ${JSON.stringify(err)}`);
-        }
-
         Logger.debug(this.LOG_TAG, `onCreate`);
     }
 

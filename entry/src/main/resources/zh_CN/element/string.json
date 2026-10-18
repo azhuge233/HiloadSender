@@ -25,6 +25,10 @@
       "value": "帮助"
     },
     {
+      "name": "index_navigation_menu_theme",
+      "value": "主题"
+    },
+    {
       "name": "index_ip_address_label",
       "value": "IP 地址"
     },
@@ -71,6 +75,78 @@
     {
       "name": "send_failed",
       "value": "发送失败: %s"
+    },
+    {
+      "name": "invalid_ip_address",
+      "value": "请输入有效的 IPv4 地址"
+    },
+    {
+      "name": "invalid_port",
+      "value": "请输入有效端口（1-65535）"
+    },
+    {
+      "name": "help_title",
+      "value": "帮助"
+    },
+    {
+      "name": "help_subtitle",
+      "value": "使用说明"
+    },
+    {
+      "name": "help_intro",
+      "value": "通过 TCP 将 payload 文件从手机发送到已破解的 PS4/PS5。"
+    },
+    {
+      "name": "help_steps_title",
+      "value": "使用步骤"
+    },
+    {
+      "name": "help_step_1",
+      "value": "确认游戏机与手机在同一网络，且 payload 接收端已启动。"
+    },
+    {
+      "name": "help_step_2",
+      "value": "输入游戏机的 IP 地址。"
+    },
+    {
+      "name": "help_step_3",
+      "value": "输入接收端使用的端口（默认 9021）。"
+    },
+    {
+      "name": "help_step_4",
+      "value": "选择 payload 文件（.elf、.bin、.js 或 .py）。"
+    },
+    {
+      "name": "help_step_5",
+      "value": "点击发送并等待结果提示。"
+    },
+    {
+      "name": "help_faq_title",
+      "value": "常见问题"
+    },
+    {
+      "name": "help_faq_1",
+      "value": "发送失败或超时：检查 IP、端口、网络与接收端状态。"
+    },
+    {
+      "name": "help_faq_2",
+      "value": "无法选择文件：仅支持 .elf、.bin、.js、.py 后缀。"
+    },
+    {
+      "name": "help_note",
+      "value": "本应用以裸 TCP 字节流发送所选文件，不做协议握手，也不校验接收端。"
+    },
+    {
+      "name": "theme_follow_system",
+      "value": "跟随系统"
+    },
+    {
+      "name": "theme_light",
+      "value": "浅色"
+    },
+    {
+      "name": "theme_dark",
+      "value": "深色"
     }
   ]
 }
